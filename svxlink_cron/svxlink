@@ -1,0 +1,24 @@
+#
+# /etc/cron.d/svxlink crontab
+#
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+#
+# Tickle the UPS Pico watchdog - must happen at least every 254 seconds
+0-59 * * * * svx_admin /usr/local/bin/watchdog
+#
+# Check the RPi temperature and set the UPS Pico fans speed accordingly
+0-59/14 * * * * root /usr/bin/python /usr/local/bin/pico_fan_ctrl.py
+#
+# Set min/max temperatures to current temperature at midnight
+0 0 * * * svx_admin /usr/local/bin/reset_temp
+#

@@ -1,0 +1,5 @@
+#!/bin/bash
+current_temp=$(read_probe outside)
+echo $current_temp > /var/tmp/svxlink/out_max
+echo $current_temp > /var/tmp/svxlink/out_min
+

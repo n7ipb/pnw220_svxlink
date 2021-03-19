@@ -1,0 +1,20 @@
+[Unit]
+Description=Svxlink Eventsource daemon
+Documentation=http://svxlink.org
+Wants=network-online.target
+After=network-online.target sound.target
+
+[Service]
+EnvironmentFile=/etc/default/svxlink
+User=svxlink
+PIDFile=/run/eventsource.pid
+ExecStartPre=+/bin/touch /var/log/eventsource
+ExecStartPre=+/bin/chown svxlink:svxlink /var/log/eventsource
+ExecStartPre=+/bin/mkdir -p /var/spool/svxlink/state_info
+ExecStartPre=+/bin/touch /var/spool/svxlink/state_info/state.log
+ExecStartPre=+/bin/chown -R svxlink:svxlink /var/spool/svxlink
+ExecStart=/usr/local/bin/eventsource.pl
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

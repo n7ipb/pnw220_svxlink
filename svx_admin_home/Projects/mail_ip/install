@@ -1,0 +1,16 @@
+#!/bin/bash
+# install the following packages
+sudo apt-get -y install msmtp msmtp-mta
+sudo apt-get -y install mailutils
+#
+# copy the config file to /etc
+sudo cp ./msmtprc /etc
+#
+# 
+echo "edit /etc/msmtprc and modify the from,user and password fields"
+#
+#
+echo "change the destination gmail address in myip and copy myip to /usr/local/bin"
+#
+echo "Now running 'myip' should email the addresses to the gmail address"
+echo

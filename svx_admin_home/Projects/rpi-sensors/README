@@ -1,0 +1,13 @@
+Raspberry pi cpu and gpu temperature.
+
+temp_gpu is a script and you need to be a member of the video group
+to execute it. 
+
+A pre-compiled version of temp_rpi is provided but if needed
+can be compiled with:
+
+gcc temp_rpi.c temp_rpi
+
+Both can be copied to /usr/bin with:
+
+sudo cp temp_rpi temp_gpu /usr/bin

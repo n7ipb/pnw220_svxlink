@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# make the tmp directory if it doesn't exist
+#
+tmp_dir=/var/tmp/svxlink
+mkdir -p $tmp_dir
+if [ ! -e $tmp_dir/out_max ]; then
+  	echo 0 > $tmp_dir/out_max
+fi
+if [ ! -e $tmp_dir/out_min ]; then
+	echo 0 > $tmp_dir/out_min
+fi
+current_temp=$(read_probe outside)
+lastmin=$(cat /var/tmp/svxlink/out_min)
+lastmax=$(cat /var/tmp/svxlink/out_max)
+
+echo $current_temp
+
+if (( $(echo "$current_temp > $lastmax" | bc -l) )); then
+ echo $current_temp > /var/tmp/svxlink/out_max
+fi
+
+if (( $(echo "$current_temp < $lastmin" | bc -l) )); then
+ echo $current_temp > /var/tmp/svxlink/out_min
+fi
+

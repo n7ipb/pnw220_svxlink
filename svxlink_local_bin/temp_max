@@ -1,0 +1,4 @@
+#!/bin/bash
+lastmin=$(cat /var/tmp/svxlink/out_min)
+lastmax=$(cat /var/tmp/svxlink/out_max)
+echo $lastmax

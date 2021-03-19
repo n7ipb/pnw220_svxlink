@@ -1,0 +1,2 @@
+#!/bin/bash
+i2cget -y 1 0x69 0x08 w | sed -e "s/^0x//" | sed -e "s/\(..\)\(..\)/\1.\2/"

@@ -1,0 +1,12 @@
+/var/log/eventsource
+/var/log/svxlink
+/var/spool/svxlink/state_info/state.log
+{
+   rotate 14
+   daily
+   compress
+   delaycompress
+   postrotate
+        /usr/bin/killall -HUP svxlink
+   endscript
+}

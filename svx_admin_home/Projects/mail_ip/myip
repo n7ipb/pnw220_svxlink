@@ -1,0 +1,10 @@
+#!/bin/bash
+myip=$(/sbin/ip -o -4 addr | awk '{print $4}' | cut -d/ -f1)
+echo $myip
+mygate=$(netstat -nr | awk '$1 == "0.0.0.0"{print$2}')
+echo $mygate
+mypublic=$(dig -4 @resolver1.opendns.com ANY myip.opendns.com +short)
+echo $mypublic
+myhost=$(hostname)
+echo $myhost
+echo -e "$myhost addresses=$myip\nmy gateway=$mygate\nmy public address=$mypublic" | mail -s "ip addresses for $myhost" <destination gmail address>
