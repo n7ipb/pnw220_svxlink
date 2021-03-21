@@ -11,7 +11,7 @@ install () {
     sudo apt-get update
     sudo apt-get -y install libxml-simple-perl vim git python-rpi.gpio python-dev python-serial python-smbus python-jinja2 python-xmltodict python-psutil python-pip
     echo "Create svxlink user"
-    sudo useradd -c "svxlink user" -G gpio,audio,video,i2c,$USER -d /home/svxlink -m -s /sbin/nologin svxlink
+    sudo useradd -c "svxlink user" -G gpio,audio,video,i2c,plugdev,$USER -d /home/svxlink -m -s /sbin/nologin svxlink
     
     echo "Install development files needed to build"
     sudo apt-get -y install dnsutils cmake libsigc++-2.0-dev libjsoncpp1 libjsoncpp-dev libasound2-dev libpopt-dev libgcrypt-dev tk-dev libgsm1-dev libspeex-dev libopus-dev groff libcurl4-openssl-dev doxygen rtl-sdr librtlsdr-dev libogg-dev tcl-expect
@@ -113,6 +113,10 @@ install () {
    sudo cp pnw220_etc/modprobe.d/alsa.conf /etc/modprobe.d
    echo "Enable loopback on boot"
    echo "snd_aloop" | sudo tee -a /etc/modules
+   echo 
+   echo "Create a udev rule for hidraw devices that allows svxlink access"
+   echo "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"plugdev\"" | sudo tee -a /lib/udev/rules.d/99-hidraw.rules
+   echo done
 }
 # Do not run if user 'pi'
 # 
