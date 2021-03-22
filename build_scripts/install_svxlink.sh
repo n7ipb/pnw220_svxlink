@@ -52,7 +52,13 @@ install () {
    echo "This version handles the ram disk we use for logging"
    sudo cp systemd_system/* /lib/systemd/system
    #
-   echo "Installing sound files"
+   echo "Fetch latest sound files"
+   echo "default = us_female"
+   read -p "us_male, us_female or other: " SOUNDFILE
+   echo
+   SOUNDFILE=${SOUNDFILE:-us_female}
+   wget -r https://github.com/n7ipb/SvxLink_TTS_Sounds/raw/master/${SOUNDFILE}.bz2
+   echo
    sudo cp -a pnw220_sounds/ /usr/share/svxlink/sounds/
    cd /usr/share/svxlink/sounds
    echo "Create link to sound files"
