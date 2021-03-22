@@ -21,7 +21,7 @@ namespace eval MetarInfo {
     #
     proc status_report {} {
         printInfo "status_report called...";
-        site_temps ;
+#        site_temps ; #Commented out for systems without temperture probes
     }
     
     proc site_temps {} {
