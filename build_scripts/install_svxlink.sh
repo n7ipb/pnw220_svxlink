@@ -57,13 +57,15 @@ install () {
    read -p "us_male, us_female or other: " SOUNDFILE
    echo
    SOUNDFILE=${SOUNDFILE:-us_female}
-   wget -r https://github.com/n7ipb/SvxLink_TTS_Sounds/raw/master/${SOUNDFILE}.bz2
-   echo
-   sudo cp -a pnw220_sounds/ /usr/share/svxlink/sounds/
    cd /usr/share/svxlink/sounds
+   sudo wget -q https://github.com/n7ipb/svxlink_sounds/raw/master/$SOUNDFILE.bz2 
+   echo $SOUNDFILE
+   sudo tar jxf $SOUNDFILE.bz2
    echo "Create link to sound files"
-   sudo ln -fs pnw220_sounds en_US
+   sudo ln -fs $SOUNDFILE en_US
    echo "SvxLink and sounds installed"
+   echo "removing sound archive"
+   sudo rm $SOUNDFILE.bz2
    sleep 5
    #
    echo "installing custom logic files in /usr/share/svxlink/events.d/local"
