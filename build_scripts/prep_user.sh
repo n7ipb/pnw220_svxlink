@@ -58,7 +58,7 @@ fi
 # Update packages 
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get -y install vim nftables libjsoncpp1 libjsoncpp-dev bc snmpd fail2ban python3-pip
+sudo apt-get -y install git vim nftables libjsoncpp1 libjsoncpp-dev bc snmpd fail2ban python3-pip
 
 echo "Run raspi-config to set local/timezone/keyboard and change the password and hostname."
 echo ""
