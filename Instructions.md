@@ -9,68 +9,84 @@ works for now
 
 
 ******************************************
+## Create a clean OS image
 
-Download the latest raspberry pi OS.
+Download the latest raspberry pi OS from https://www.raspberrypi.org/software/operating-systems/
 
-Copy the image to an SD card - I use SanDisk 32GB High Endurance Video MicroSDHC cards,
-https://www.amazon.com/gp/product/B07P14QHB7
+Raspberry Pi OS Lite is recommended
 
-Linux:  'sudo dd if=<imagefile>  of=/dev/<sdcard name>  bs=512M'
+### Copy the image to an SD card - 
+I use SanDisk 32GB High Endurance Video MicroSDHC cards, https://www.amazon.com/gp/product/B07P14QHB7
 
-Mount the boot partition and Enable ssh by putting an empty file called 'ssh' in the boot partition.
+I suggest downloading the official Raspberry Pi imager for your operating system
+https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/
 
-Linux: 
-sudo mount /dev/<sdcard partition 1> /mnt
-sudo touch /mnt/ssh
-sudo umount /mnt
+It's available for Windows, macOS and Ubuntu.  Source is also available and I found it easy to 
+build and install on OpenSUSE.
 
-Mount the main partition and copy the build info
-Linux:
-sudo mount /dev/sdcard partition 2> /mnt
-sudo cp <tarball of ~/Projects/pnw220_svxlink> /mnt/home/pi
-sudo umount /mnt
+### Run rpi-imager
 
-Make sure all the data is written to SD card
-linux:
-sync
+#### rpi-imager Advanced options
 
-Boot the RPi with the new image.
-Login as user pi
-Unpack the tarball
-tar jxvf pnw220_svxlink_files.bz2
+- Press ‘Ctrl-Shift-X’
+- Set the hostname,
+- Enable SSH 
+- Set a password for the 'pi' user
+- Best NOT to set Allow public-key authentication only
+    We need to be able to log in to a newly created user with a password to install svxlink
+- Configure wifi if you wish
+- Set locale settings
 
-cd  ~/pnw220_svxlink/build_scripts
+#### Choose the OS
 
-run the prep_user.sh script
+- Select the OS - Raspberry Pi OS (other)
+- Select Raspberry Pi OS Lite (32-bit)
+- Select 'Storage'
+- Identify your SD card and select it
+- Click on 'WRITE' and wait for it to finish.
+- Exit rpi-imager
 
-This will update the OS and run raspi-config where you will have the opportunity 
-to set a new hostname, language, timezone, etc.   You can also enable any needed 
+You are now ready to boot the new image.
+
+### Boot the RPi with the new image.
+
+- Login as user pi
+- Get the prep_user.sh script
+
+    wget -q https://github.com/n7ipb/pnw220_svxlink/raw/master/build_scripts/prep_user.sh
+
+- Execute prep_user.sh
+    bash ./prep_user.sh
+
+prep_user.sh updates the OS packages, installs additonal packages for later use and
+runs raspi-config where you will have the opportunity to enable any needed 
 interfaces (SPI,I2C,1-Wire)
 Do NOT let raspi-config reboot.  The prep_user script will do that for you.
-
-Then it will create a new user for administration work amd disable user 'pi' for security.  
+Once raspi-config is complete it will create a new user (svx_admin by default) for administration 
+work amd disable user 'pi' for security.  
 Most attempts to hack a pi start with attempted logins as user 'pi'.
 
-The pi will then reboot.
+- The pi will then reboot..
 
-Log back in as the new user (svx_admin@newhostname)
-This is a good point to install ssh public keys. (Highly, highly recommended)
+## Installing svxlink and support packages as svx_admin
+
+- Log back in as the new user (svx_admin@newhostname)
+
+- This is a good point to install ssh public keys. (Highly, highly recommended)
 On linux this is the 'ssh-copy-id user@hostname' command executed from the machine that
 has the public/private keys.
 
-Once logged in mv the /home/pi/pnw220_svxlink directory to ~/Projects
+- Move to the Projects directory
+    cd ~/Projects
+- Download the pnw_220_svxlink project from github.
+    git clone https://github.com/n7ipb/pnw220_svxlink.git
 
-mv /home/pi/pnw220_svxlink ~/Projects
+### Run the install script
 
-Change it's file owner to the new user.
-
-chown -R svx_admin ~/Projects/pnw220_svxlink
-
-cd ~/Projects/pnw220_svxlink/build_scripts
-
-execute the install_svxlink.sh script
-
-./install_svxlink.sh
+- Move to the build_scripts directory
+    cd ~/Projects/pnw220_svxlink/build_scripts
+- start the script
+    ./install_svxlink.sh'
 
 This will update the repostiories, install needed support packages, create a svxlink user (no login created)
  and add the user 'svxlink' to various groups.
@@ -84,7 +100,12 @@ and enable loopback devices for the sound system.
 
 Then it reboots
 
-You can then log back in and configure and enable svxlink.
+## Log in and configure
 
-N7IPB - 03/15/2021
+- Edit /etc/svxlink/svxlink.conf (In the future this will be done thru a configuration program)
+    Make all changes needed for your system
+
+- Enable svxlink with 'sudo systemctl enable svxlink' svxlink will automatically start on the next reboot
+- Manually start and stop with 'sudo systemctl start/stop/restart svxlink'
+
 
