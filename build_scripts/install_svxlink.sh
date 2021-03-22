@@ -44,13 +44,16 @@ install () {
     # 
     #
     cd ~/Projects
-#    git clone https://github.com/n7ipb/pnw220_svxlink
+    echo "Download rpi-1wire programs and place in Projects directory"
+    echo "You don't have to use them but this makes them available"
+    echo "If you do install 1-wire temperature probes"
+    echo "Follow the directions in Projects/rpi-1wire"
+    git clone https://github.com/n7ipb/rpi-1wire
     #
-    cd pnw220_svxlink
-    
-   echo "Installing modified systemd svxlink.service"
-   echo "This version handles the ram disk we use for logging"
-   sudo cp systemd_system/* /lib/systemd/system
+    sleep 5
+    echo "go to the directory where custom config files are found"
+    echo "This directory would have been created and copied to "
+    echo "/home/svx_admin/Projects by the prep_user script"
    #
    echo "Fetch latest sound files"
    echo "default = us_female"
@@ -67,6 +70,11 @@ install () {
    echo "removing sound archive"
    sudo rm $SOUNDFILE.bz2
    sleep 5
+   #
+   cd ~/Projects/pnw220_svxlink
+   echo "Installing modified systemd svxlink.service"
+   echo "This version handles the ram disk we use for logging"
+   sudo cp systemd_system/* /lib/systemd/system
    #
    echo "installing custom logic files in /usr/share/svxlink/events.d/local"
    #
@@ -93,11 +101,6 @@ install () {
    sudo cp -a svx_admin_home/.ssh /home/svx_admin/.ssh
    sudo cp -a svx_admin_home/.bash_git /home/svx_admin
    sudo cp -a svx_admin_home/.bash_aliases /home/svx_admin
-   echo "If using 1-wire temperature probes follow the install"
-   echo "directions in /home/svx_admin/rpi-1wire"
-   echo "------------------------------"
-   echo "If using a pico-ups board run  install_pico.sh next"
-   echo "------------------------------"
    echo "Installl vimrc.local - I don't like the stock settings"
    sudo cp pnw220_etc/vim/vimrc.local /etc/vim
    sudo cp pnw220_etc/vim/vimrc /etc/vim
