@@ -14,7 +14,7 @@ install () {
     sudo useradd -c "svxlink user" -G gpio,audio,video,i2c,plugdev,$USER -d /home/svxlink -m -s /sbin/nologin svxlink
     
     echo "Install development files needed to build"
-    sudo apt-get -y install dnsutils cmake libsigc++-2.0-dev libjsoncpp1 libjsoncpp-dev libasound2-dev libpopt-dev libgcrypt-dev tk-dev libgsm1-dev libspeex-dev libopus-dev groff libcurl4-openssl-dev doxygen rtl-sdr librtlsdr-dev libogg-dev tcl-expect
+    sudo apt-get -y install dnsutils cmake libsigc++-2.0-dev libjsoncpp1 libjsoncpp-dev libasound2-dev libpopt-dev libgcrypt-dev tk-dev libgsm1-dev libspeex-dev libopus-dev groff libcurl4-openssl-dev doxygen rtl-sdr librtlsdr-dev vorbis-tools libogg-dev tcl-expect
     # 
     echo "Install additional files needed for full operation"
     sudo apt-get -y install vim nftables libjsoncpp1 libjsoncpp-dev bc snmpd fail2ban python3-pip darkice
