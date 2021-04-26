@@ -1,9 +1,9 @@
 # pnw220_svxlink
-Build scripts and support files for creating a SVXLink RPi image as customized for pnw220.net
+Build scripts and support files for creating a SvxLink RPi image as customized for pnw220.net
 
 ## Things to know about this project
-1. It creates a full image that contains much more than just SVXLink
-2. Custom SVXLink sound files created using Google TTS.
+1. It creates a full image that contains much more than just SvxLink
+2. Custom SvxLink sound files created using Google TTS.
 3. RAM partitions for /var/log and others to limit SD card writes
 4. log rotation so you don't fill up the log partition
 5. fail2ban is used to monitor login attempts and block repeat offenders.
