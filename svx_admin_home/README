@@ -35,6 +35,7 @@ sudo systemctl start/stop eventsource
 /etc/nftables.conf	Firewall rules
 /etc/vim		updated VIM editor files - I don't like the stock config
 /etc/cron.d/svxlink	Cron entries for svxlink specific functions if needed
+/etc/udev/rules.d/99-hidraw.rules	Rule to make hidraw devices part of the plugdev group
 
 /usr/share/svxlink/...	Svxlink events,sounds,tcl etc.
 
